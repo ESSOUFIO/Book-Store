@@ -1,9 +1,11 @@
 import React, { Fragment } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logInOut } from "../Store/authSlice";
 
 const Header = () => {
   const { error } = useSelector((state) => state.bookState);
-  console.log("error: ", error);
+  const { isLoggedIn } = useSelector((state) => state.authState);
+  const dispatch = useDispatch();
   return (
     <Fragment>
       {error ? (
@@ -17,8 +19,12 @@ const Header = () => {
             Navbar
           </a>
           <form className="d-flex" role="search">
-            <button className="btn btn-success" type="submit">
-              Log In
+            <button
+              className="btn btn-success"
+              type="button"
+              onClick={() => dispatch(logInOut())}
+            >
+              {isLoggedIn ? "Log Out" : "Log In"}
             </button>
           </form>
         </div>
